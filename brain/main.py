@@ -74,7 +74,7 @@ def readyForChoice(data, *args, **kwargs):
         })
 
 
-def voteRecieved(data, *args, **kwargs):
+def voteReceived(data, *args, **kwargs):
     y = json.loads(data)
     print(y)
     theChoices[currentChoice]['choices'][y['choice']]['votes'] += 1
@@ -104,12 +104,11 @@ pusher = pysher.Pusher(os.getenv("PUSHER_KEY"), 'ap1')
 def connect_handler(data):
     channel = pusher.subscribe('drama')
     channel.bind('readyForChoice', readyForChoice)
-    channel.bind('voteRecieved', voteRecieved)
+    channel.bind('voteReceived', voteReceived)
     channel.bind('timeIsUp', timeIsUp)
 
 pusher.connection.bind('pusher:connection_established', connect_handler)
 pusher.connect()
 
 while True:
-    # Do other things in the meantime here...
     sleep(1)

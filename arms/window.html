@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>repl.it</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/@geist-ui/style@latest/dist/style.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  </head>
+  <body>
+    <div class="background">
+      <div style="z-index: 999">
+        <button onclick="newQuestion()">New Question</button>
+        <button onclick="choiceMade()">Choice Made</button>
+      </div>
+    </div>
+    <script>
+      const pusher = new Pusher("92c64299da2189a14546", {
+        cluster: "ap1",
+      });
+      const channel = pusher.subscribe('drama');
+      channel.bind('newChoice', function (data) {
+        newQuestion()
+      });
+      channel.bind('results', function (data) {
+        console.log(data)
+        choiceMade(data.choosen.choice, (data.choosen.choice / (data.choosen.choice + data.notChoosen.choice))*100)
+      });
+      function newQuestion() {
+        let opened = true;
+        Swal.fire({
+          title: "New choice available!",
+          text: "Please use your devices to make your choice.",
+          icon: "question",
+          showConfirmButton: false,
+          timer: 30000,
+          didClose: timesUp,
+          timerProgressBar: true,
+        });
+      }
+
+      function timesUp(){
+        fetch('https://drama-neurons.vercel.app/api/timesUp')
+      }
+
+      function choiceMade(label, percentage) {
+        Swal.fire({
+          title: label,
+          text: `has been choosen with a ${percentage}% vote.`,
+          icon: "success",
+          showConfirmButton: false,
+          timer: 5000,
+          timerProgressBar: true,
+        });
+      }
+    </script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+        margin: 0px;
+      }
+
+      .background {
+        position: absolute;
+        background: url("https://images.unsplash.com/photo-1600441162834-741b4813e546?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1654&q=80");
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        width: 100vw;
+        background-repeat: no-repeat;
+      }
+
+      #swal2-content {
+        margin-bottom: 1.25em;
+      }
+      
+    </style>
+  </body>
+</html>

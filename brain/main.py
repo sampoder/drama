@@ -86,13 +86,17 @@ def timeIsUp(data, *args, **kwargs):
 
     choosen = theChoices[currentChoice]['choices'][0]
 
+    notChoosen = theChoices[currentChoice]['choices'][1]
+
     if theChoices[currentChoice]['choices'][0]['votes'] < theChoices[currentChoice]['choices'][1]['votes']:
         choosen = theChoices[currentChoice]['choices'][1]
-    print(choosen)
+        notChoosen = theChoices[currentChoice]['choices'][0]
     currentChoice = choosen['index']
-    print('Tallying up the responses')
-    print('The Winner is: !')
-    print('Sending the winner to the window!')
+    pusher_client.trigger(
+        u'drama', u'results', {
+            'choosen': choosen,
+            'notChoosen': notChoosen
+        })
 
 
 pusher = pysher.Pusher(os.getenv("PUSHER_KEY"), 'ap1')

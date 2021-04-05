@@ -29,7 +29,7 @@
       });
       channel.bind('results', function (data) {
         console.log(data)
-        choiceMade(data.choosen.choice, (data.choosen.choice / (data.choosen.choice + data.notChoosen.choice))*100)
+        choiceMade(data.choosen.choice, (data.choosen.votes / (data.choosen.votes + data.notChoosen.votes))*100)
       });
       function newQuestion() {
         let opened = true;

@@ -17,10 +17,21 @@
         class="zi-fieldset-content"
         style="height: calc(100vh - 88px); text-align: center"
       >
-        <button class="zi-btn danger shadow" style="height: 40vh; width: calc(100% - 1.375rem - 1.375rem); font-size: 7vh; font-weight: 600;">
+        <button
+          onclick="fetch('https://drama-neurons.vercel.app/api/ready')"
+          class="zi-btn danger shadow"
+          style="
+            height: 40vh;
+            width: calc(100% - 1.375rem - 1.375rem);
+            font-size: 7vh;
+            font-weight: 600;
+          "
+        >
           Trigger
         </button>
-        <pre style="white-space: break-spaces;">const isNaN = val => Number.isNaN(val)</pre>
+        <pre style="white-space: break-spaces">
+const isNaN = val => Number.isNaN(val)</pre
+        >
       </div>
       <div class="zi-fieldset-footer">
         <p

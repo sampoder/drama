@@ -77,7 +77,7 @@ def readyForChoice(data, *args, **kwargs):
 def voteReceived(data, *args, **kwargs):
     y = json.loads(data)
     print(y)
-    theChoices[currentChoice]['choices'][y['choice']]['votes'] += 1
+    theChoices[currentChoice]['choices'][int(y['choice'])]['votes'] += 1
 
 
 def timeIsUp(data, *args, **kwargs):

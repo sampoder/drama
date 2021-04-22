@@ -2,3 +2,4 @@ node_modules
 .vscode/.ropeproject/config.py
 .vscode/.ropeproject/objectdb
 .DS_Store
+tmp.mp3

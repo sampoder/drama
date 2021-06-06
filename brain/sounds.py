@@ -5,6 +5,7 @@ from time import sleep
 import pysher
 import logging
 import sys
+import json
 import rtmidi
 from dotenv import load_dotenv
 
@@ -30,26 +31,27 @@ else:
 # We can't subscribe until we've connected, so we use a callback handler
 # to subscribe when able
 def playTheSounds(data, *args, **kwargs):
-  print(data)
-  if data.sound == "padlock":
+  y = json.loads(data)
+  print(y)
+  if y['sound'] == "padlock":
     playsound('/Users/sam/Documents/GitHub/drama/mouth/padlock.flac')
-  if data.sound == "siren":
+  if y['sound'] == "siren":
     playsound('/Users/sam/Documents/GitHub/drama/mouth/siren.flac')
-  if data.sound == "pressure":
+  if y['sound'] == "pressure":
     note_off = [0x90, 100, 100]
     midiout.send_message(note_off)
-  if data.sound == "quote":
+  if y['sound'] == "quote":
     note_off = [0x90, 0, 0]
     midiout.send_message(note_off)
     playsound('/Users/sam/Documents/GitHub/drama/mouth/quote.mp3')
-  if data.sound == "drop":
+  if y['sound'] == "drop":
     note_off = [0x90, 0, 0]
     midiout.send_message(note_off)
     playsound('/Users/sam/Documents/GitHub/drama/mouth/siren.flac')
     sleep(1)
     note_off = [0x90, 100, 0]
     midiout.send_message(note_off)
-  if data.sound == "rattle":
+  if y['sound'] == "rattle":
     playsound('/Users/sam/Documents/GitHub/drama/mouth/rattle.mp3')
 
 def connect_handler(data):
